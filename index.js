@@ -12,6 +12,18 @@ const app = express();
 //mangoDb conection string
 const mongoURI='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
 
+// connect to mango atlas
+mongoose.connect(mangoURI,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+})
+.then(()=>{
+    console.log('connected to mangodb');
+})
+.catch((error)=>{
+    console.error('error connecting to mangoDb');
+});
+
 //middleware to bodyparser json bodies
 app.use(bodyParser.json);
 app.use(bodyParser.urlencoded({extended:true}));
