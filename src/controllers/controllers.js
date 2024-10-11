@@ -16,3 +16,6 @@ exports.getMovies = async(req,res)=>{
 
 //Route to import movies
 router.post('/import',movieController.importMovies);
+
+
+module.exports = router;

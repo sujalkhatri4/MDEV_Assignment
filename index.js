@@ -8,10 +8,14 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 const fs = require('fs');
 const path = require('path');
+const movieRoutes = require('./src/routes/routes');
 
 // Initialize MongoDB connection
 const InitiateMongoServer = require('./db');
+const { route } = require('./src/routes/routes');
 InitiateMongoServer();
+
+
 //Read data from movies.json
 try{
 const data = JSON.parse(fs.readFileSync('./movies.json','utf-8'));
@@ -25,12 +29,10 @@ catch(e){
 const app = express();
 
 
-
-
-
 //middleware to bodyparser json bodies
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use('/api/movies',movieRoutes)
 
 //mongoDb conection string
 const mongoURI ='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
