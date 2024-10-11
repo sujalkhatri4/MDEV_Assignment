@@ -1,21 +1,15 @@
-
 const Movie = require('../models/Movies');
 const fs =require('fs');
 
-//Function to get all the files
-exports.getMovies = async(req,res)=>{
+//Function to import all movies from json
+exports.importMovies = async(req,res)=>{
     try{
-        const movies = await Movie.find();
-         res.status(200).json(movies);
+        const data = JSON.parse(fs.readFileSync('./movies.json', 'utf-8'));
+        await Movies.insertMany(data);// import data from mongodb
+        res.status(200).send("movies imported sucessfully")
     }
-    catch(e){
-            console.error(e);
-            res.status(500).send('Error retrieving Movies');
+    catch{(e)
+        console.error(e);
     }
-};
 
-//Route to import movies
-router.post('/import',movieController.importMovies);
-
-
-module.exports = router;
+    };
