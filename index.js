@@ -9,19 +9,16 @@ const mongoose = require('mongoose')
 // Initialize the express app
 const app = express();
 
-//mangoDb conection string
-const mongoURI='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
+//mongoDb conection string
+const mongoURI ='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
 
-// connect to mango atlas
-mongoose.connect(mangoURI,{
-    useNewUrlParser:true,
-    useUnifiedTopology:true
-})
+// connect to mongo atlas
+mongoose.connect(mongoURI)
 .then(()=>{
-    console.log('connected to mangodb');
+    console.log('connected to mongodb');
 })
 .catch((error)=>{
-    console.error('error connecting to mangoDb');
+    console.error('error connecting to mongoDb');
 });
 
 //middleware to bodyparser json bodies
