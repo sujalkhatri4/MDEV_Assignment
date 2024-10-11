@@ -13,3 +13,6 @@ exports.getMovies = async(req,res)=>{
             res.status(500).send('Error retrieving Movies');
     }
 };
+
+//Route to import movies
+router.post('/import',movieController.importMovies);
