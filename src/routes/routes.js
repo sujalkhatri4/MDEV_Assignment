@@ -12,3 +12,6 @@ router.get('/',movieController.getMovies);
 router.post('/create',movieController.createMovie);
 
 module.exports = router;
+
+//Route to get a singlre movie by id
+router.get('/:id',movieController.getMovieById);
