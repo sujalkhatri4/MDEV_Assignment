@@ -9,6 +9,9 @@ const mongoose = require('mongoose')
 // Initialize the express app
 const app = express();
 
+//mangoDb conection string
+const mongoURI='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
+
 //middleware to bodyparser json bodies
 app.use(bodyParser.json);
 app.use(bodyParser.urlencoded({extended:true}));
