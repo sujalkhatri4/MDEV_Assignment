@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const fs = require('fs');
+const importMovies  = require("./src/controllers/controllers")
 const MONGOURI =process.env.MONGO_URI;
 
 const InitiateMongoServer = async()=>{

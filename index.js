@@ -16,18 +16,32 @@ const InitiateMongoServer = require('./db');
 const { route } = require('./src/routes/routes');
 InitiateMongoServer();
 
-
-//Read data from movies.json
-try{
-const data = JSON.parse(fs.readFileSync('./movies.json','utf-8'));
-console.log(data)
-}
-catch(e){
-        console.log(e);
-}
-
 // Initialize the express app
 const app = express();
+
+//Read data from movies.json
+const data = JSON.parse(fs.readFileSync('./movies.json','utf-8'));
+//console.log(data)
+
+
+//Function to import movies from JSON
+const importMovies = async (req, res) => {
+    try {
+        const count = await Movie.countDocuments();
+        if (count === 0) {
+            
+            await Movie.create(data);
+            console.log('Data successfully imported to MongoDb');
+            res.status(200).send('Data successfully imported');
+        } else {
+            console.log('Data already exists in the database, skipping import');
+            res.status(200).send('Data already exists, skipping import');
+        }
+    } catch (e) {
+        console.error('Error importing data',e);
+        
+    }
+};
 
 
 //middleware to bodyparser json bodies
@@ -52,4 +66,10 @@ const port = process.env.PORT || 3004;
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
 });
