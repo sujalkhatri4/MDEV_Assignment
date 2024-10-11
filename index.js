@@ -6,26 +6,34 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
+const fs = require('fs');
+const path = require('path');
 
+// Initialize MongoDB connection
+const InitiateMongoServer = require('./db');
+InitiateMongoServer();
+//Read data from movies.json
+try{
+const data = JSON.parse(fs.readFileSync('./movies.json','utf-8'));
+console.log(data)
+}
+catch(e){
+        console.log(e);
+}
 
 // Initialize the express app
 const app = express();
 
-//mongoDb conection string
-const mongoURI ='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
 
-// connect to mongo atlas
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>{
-    console.log('connected to mongodb');
-})
-.catch((error)=>{
-    console.error('error connecting to mongoDb');
-});
+
+
 
 //middleware to bodyparser json bodies
 app.use(bodyParser.json);
 app.use(bodyParser.urlencoded({extended:true}));
+
+//mongoDb conection string
+const mongoURI ='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
 
 // Define a root route
 app.get('/', (req, res) => {
