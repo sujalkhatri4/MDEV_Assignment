@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/movie',movieRoutes)
-
+console.log("h1")
 
 //set the port 
 const port = process.env.PORT || 3004;
