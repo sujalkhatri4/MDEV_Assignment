@@ -67,3 +67,47 @@ exports.updateMovie = async(req,res) =>{
         res.status(500).send('Error uodating the Movies');
     }
     };
+
+        //Delete a single movie by Id
+exports.deleteMovie = async(req,res) =>{
+    try{
+        const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
+        if(!deletedMovie){
+            return res.status(404).send('Movie not found');
+        }
+        res.status(201).json(deletedMovie);
+    
+    }
+    catch(e){
+        console.error(e);
+        res.status(500).send('Error deleting the Movies');
+    }
+    };
+
+    // Function to get all movies with search and filter options
+exports.getMovies = async (req, res) => {
+    try {
+        // Extract query parameters
+        const { title, genre, year } = req.query;
+        
+        // Build the query object
+        const query = {};
+        
+        if (title) {
+            query.title = { $regex: title, $options: 'i' }; 
+        }
+        if (genre) {
+            query.genres = genre; // Filter by genre
+        }
+        if (year) {
+            query.year = year; // Filter by release year
+        }
+        
+        // Find movies based on the constructed query
+        const movies = await Movie.find(query);
+        res.status(200).json(movies);
+    } catch (e) {
+        console.error(e);
+        res.status(500).send('Error retrieving movies');
+    }
+};

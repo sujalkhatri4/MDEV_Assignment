@@ -18,4 +18,11 @@ router.get('/:id', movieController.getMovieById);
 
 router.put('/update/:id',movieController.updateMovie);
 
+//Route top delete a movie by id
+
+router.delete('/delete/:id',movieController.deleteMovie);
+
+// Route to get all movies with search and filter options
+router.get('/', movieController.getMovies);
+
 module.exports = router;
