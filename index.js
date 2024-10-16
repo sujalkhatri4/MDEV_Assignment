@@ -50,6 +50,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(logger);//apply logger middleware
 app.use(handleNotFound);//404 handler for routes not defined
+//set the port 
+const port = process.env.PORT || 3004;
 
 
 //mongoDb conection string
@@ -63,8 +65,7 @@ app.get('/', (req, res) => {
 app.use('/movie',movieRoutes)
 console.log("h1")
 
-//set the port 
-const port = process.env.PORT || 3004;
+
 
 // Start the server
 app.listen(port, () => {
