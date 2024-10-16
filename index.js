@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 const movieRoutes = require('./src/routes/routes');
+const {logger,handleNotFound} = require('./src/middleware/middleware');
 
 dotenv.config({ path: './config.env' });
 
@@ -47,6 +48,8 @@ const importMovies = async (req, res) => {
 //middleware to bodyparser json bodies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(logger);//apply logger middleware
+app.use(handleNotFound);//404 handler for routes not defined
 
 
 //mongoDb conection string
