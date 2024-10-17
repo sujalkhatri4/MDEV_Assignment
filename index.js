@@ -12,7 +12,7 @@ const {logger,handleNotFound} = require('./src/middleware/middleware');
 dotenv.config({ path: './config.env' });
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-//const crypto = require('crypto');
+const crypto = require('crypto');
 require('./src/config/passportConfig');
 const authRoutes = require('./src/routes/authRoutes');
 
@@ -24,6 +24,19 @@ InitiateMongoServer();
 
 // Initialize the express app
 const app = express();
+
+
+//Set us session and passport
+const secretKey = process.env.SECRET_KEY || crypto.randomBytes(64).toString('hex');
+console.log(`Generated Secret Key: ${secretKey}`);
+app.use(session({
+    secret:secretKey,
+    resave:false,
+    saveUninitialized:true,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //Read data from movies.json
 const data = JSON.parse(fs.readFileSync('./movies.json','utf-8'));
@@ -58,6 +71,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //mongoDb conection string
 //const mongoURI ='mongodb+srv://veroproduction4:sujalapi@cluster4.rmdge.mongodb.net/';
+
+//Use auth Routes
+app.use('/auth',authRoutes);
 
 // Define a root route
 app.get('/', (req, res) => {
