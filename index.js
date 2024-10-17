@@ -48,10 +48,7 @@ const importMovies = async (req, res) => {
 //middleware to bodyparser json bodies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(logger);//apply logger middleware
-app.use(handleNotFound);//404 handler for routes not defined
-//set the port 
-const port = process.env.PORT || 3004;
+
 
 
 //mongoDb conection string
@@ -59,13 +56,13 @@ const port = process.env.PORT || 3004;
 
 // Define a root route
 app.get('/', (req, res) => {
-    res.send('Welcome to the first program of Node.js Express');
-});
-
+    res.send('Welcome to the first program of Node.js Express');});
 app.use('/movie',movieRoutes)
 console.log("h1")
-
-
+app.use(logger);//apply logger middleware
+app.use(handleNotFound);//404 handler for routes not defined
+//set the port 
+const port = process.env.PORT || 3004;
 
 // Start the server
 app.listen(port, () => {
