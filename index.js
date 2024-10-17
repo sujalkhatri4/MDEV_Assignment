@@ -9,8 +9,13 @@ const fs = require('fs');
 const path = require('path');
 const movieRoutes = require('./src/routes/routes');
 const {logger,handleNotFound} = require('./src/middleware/middleware');
-
 dotenv.config({ path: './config.env' });
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+//const crypto = require('crypto');
+require('./src/config/passportConfig');
+const authRoutes = require('./src/routes/authRoutes');
+
 
 // Initialize MongoDB connection
 const InitiateMongoServer = require('./db');
